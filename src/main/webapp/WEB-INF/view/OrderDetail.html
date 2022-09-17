@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>订单详情页</title>
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  <link href="./css/Navi.css" rel="stylesheet"/>
+  <link href="./css/spxq.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/swiper-bundle.min.css">
+  <script src="./js/searchBar.js"></script>
+</head>
+<body>
+<!-- navi -->
+<nav class="sidebar close">
+  <header>
+    <div class="image-text">
+                <span class="image">
+                    <img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.q4HiVTA0d07KjLUqmbQ0JgAAAA?w=134&h=150&c=7&r=0&o=5&dpr=1.5&pid=1.7"
+                         alt="用户图片">
+                </span>
+      <div class="text logo-text">
+        <span class="name"></span>
+        <span class="profession">用户职位</span>
+      </div>
+    </div>
+
+    <i class="bx bx-chevron-right toggle"></i>
+  </header>
+  <div class="menu-bar">
+    <div class="menu">
+
+      <ul class="menu-links">
+
+        <li class="nav-link" data-id="test">
+          <a th:href="@{/User.do(Type='User',PageNo=1)}">
+            <i class='bx bx-user icon' ></i>
+            <span class="text nav-text">用户信息</span>
+          </a>
+        </li>
+
+        <li class="nav-link" data-id="test">
+          <a th:href="@{/User.do(Type='Bus',PageNo=1)}">
+            <i class='bx bxs-business icon'></i>
+            <span class="text nav-text">商户信息</span>
+          </a>
+        </li>
+
+        <!-- 下面的小li都是一样的样式，只需要修改文字和图标 -->
+        <li class="nav-link" data-id="Login">
+          <a th:href="@{/Goods.do(Table='Goods',PageNo=1)}">
+            <i class='bx bx-shopping-bag icon' ></i>
+            <span class="text nav-text">商品信息</span>
+          </a>
+        </li>
+
+        <li class="nav-link">
+          <a th:href="@{/Goods.do(Table='unjudgedGoods',PageNo=1)}">
+            <i class='bx bx-badge-check icon' ></i>
+            <span class="text nav-text">商品信息审核</span>
+          </a>
+        </li>
+
+        <li class="nav-link">
+          <a th:href="@{/Orders.do(PageNo=1)}">
+            <i class='bx bx-task icon'></i>
+            <span class="text nav-text">订单信息</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="bottom-content">
+      <li>
+        <a  th:href="@{/Login.do}">
+          <i class="bx bx-log-out icon"></i>
+          <span class="text nav-text">登出</span>
+        </a>
+      </li>
+      <li class="mode">
+        <div class="sun-moon">
+          <i class="bx bx-moon icon moon"></i>
+          <i class="bx bx-sun icon sun"></i>
+        </div>
+        <span class="mode-text text">夜间模式</span>
+        <div class="toggle-switch">
+          <span class="switch"></span>
+        </div>
+      </li>
+    </div>
+
+  </div>
+</nav>
+<script src="./js/Navi.js"></script>
+
+<div id="content" class="home">
+  <div class="detail">
+    <div class="detail-left">
+      <b>订单详情</b>
+    </div>
+    <div class="detail-right">
+      <a th:href="@{/Orders.do}">
+        <button ><i class='bx bx-arrow-back bx-tada' ></i>返回</button>
+      </a>
+    </div>
+  </div>
+
+  <div class="shop_detail">
+    <div class="shop_detail_pic">
+      <iframe  th:src="@{/Swiper.do(operate='Render')}" frameborder="0" scrolling="no">
+      </iframe>
+    </div>
+
+    <div class="shop_detail_menu" th:object="${Order}">
+      <h1 th:text="*{getGoodsName()}">商品名称</h1>
+      <h1 th:text="|编号:*{getOrderNo()}|">订单编号</h1>
+      <div class="detail_map">
+        <i class='bx bx-buildings' ></i>
+        <span th:text="|供应商:*{getBusName()}|">供应商：陕西&nbsp;咸阳市 秦都区 高新开发区世纪大道68号高新工业园</span>
+        <br>
+        <br>
+        <i class='bx bx-map' ></i>
+        <span th:text="|创建日期:*{getOrderDate()}|">创建日期：</span>
+        <h2 th:text="|商品数量:*{getGoodsNum()}|">商品数量:</h2>
+        <h2 th:text="|订单总额:*{getOrderCost()}|">订单总额：</h2>
+      </div>
+      <div class="detail_order">
+        <h2 th:text="|订单状态:*{getOrderState()}|">订单状态：</h2>
+        <span>修改订单状态：
+                        <select name="judge" id="State">
+                            <option value="已收货">已收货</option>
+                            <option value="待收货">待收货</option>
+                            <option value="已退货">已退货</option>
+                            <option value="待退货">待退货</option>
+                        </select>
+                    </span>
+        <br>
+        <button th:onclick="ChangeState([[*{getOrderNo()}]])">修改</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="l_bottom">
+    <div class="bottom_line">后台管理系统 .Copyright ©2022</div>
+  </div>
+</div>
+</body>
+</html>

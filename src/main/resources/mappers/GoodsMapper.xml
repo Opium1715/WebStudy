@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="DAO.Mapper.GoodsMapper">
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*) from
+        <trim>
+            <if test="Table=='Goods'">
+                Goods
+            </if>
+            <if test="Table=='unjudgedGoods'">
+                unjudgedGoods
+            </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and">
+            <if test="Name!=null">
+                goodsName like '%${Name}%' and
+            </if>
+            <if test="lPrice!=null and hPrice!=null">
+                goodsPrice &gt;= #{lPrice} and goodsPrice &lt;= #{hPrice} and
+            </if>
+            <if test="Type!=null">
+                goodsType = #{Type} and
+            </if>
+            <if test="busNo!=null">
+                goodsSupply = #{busNo} and
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectSupplyName" resultType="java.lang.String">
+        select busName from Business
+            where businessNo = #{goodsSupply}
+    </select>
+
+    <select id="selectByPageNew" resultType="Bean.Goods">
+
+        <trim>
+            <if test="Table=='Goods'">
+                select goodsNo,goodsName,goodsPrice,className goodsType from Category,
+                Goods
+            </if>
+            <if test="Table=='unjudgedGoods'">
+                select goodsNo,goodsName,goodsPrice,className goodsType,judgeState from Category,
+                unjudgedGoods
+            </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and">
+            <if test="Name!=null">
+                 goodsName like '%${Name}%' and
+            </if>
+            <if test="lPrice!=null and hPrice!=null">
+                 goodsPrice &gt;= #{lPrice} and goodsPrice &lt;= #{hPrice} and
+            </if>
+            <if test="Type!=null">
+                 goodsType = #{Type} and
+            </if>
+            <if test="busNo!=null">
+                goodsSupply = #{busNo} and
+            </if>
+              goodsType = Category.classNo
+            <if test="Order!=null">
+                order by goodsPrice ${Order}
+            </if>
+
+        </trim>
+        limit #{PageNo}, 9
+    </select>
+
+    <select id="selectGood" resultType="Bean.Goods">
+        select  goodsNo,goodsName,goodsPrice,Category.className goodsType,goodsNum,goodsDescription,
+                Business.busName goodsSupply,goodsImg,address goodsAddress
+            from Business, Category,
+        <trim>
+            <if test="Table=='Goods'">
+                Goods
+            </if>
+            <if test="Table=='unjudgedGoods'">
+                unjudgedGoods
+            </if>
+        </trim>
+        where goodsNo = #{goodsNo} and goodsSupply = Business.businessNo and goodsType = Category.classNo
+    </select>
+
+    <select id="selectBusAddress" resultType="java.lang.String">
+        select address
+        from Business
+        where businessNo=#{busNo}
+    </select>
+
+    <select id="selectGoodsSale" resultType="java.lang.Integer">
+        select count(*)
+            from orders
+            where goodsNo=#{goodsNo}
+    </select>
+
+    <update id="updateGoodsState" parameterType="java.lang.String">
+        update unjudgedGoods
+        set judgeState = #{State}
+        where goodsNo = #{goodsNo}
+    </update>
+
+    <delete id="deleteGoods" parameterType="java.lang.String">
+        delete
+        from Goods
+        where goodsNo = #{goodsNo}
+    </delete>
+    
+    <insert id="insertGoods" parameterType="Bean.Goods">
+        insert into unjudgedGoods
+        values ('1',#{goodsName},#{goodsPrice},#{goodsType},#{goodsNum},#{goodsImg},#{goodsDescription},#{goodsSupply},'待审核')
+    </insert>
+</mapper>

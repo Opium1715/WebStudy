@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="DAO.Mapper.OrdersMapper">
+
+
+    
+    <select id="selectByPages" resultType="Bean.Orders">
+        select orderNo,orderDate,orderCost,orderState
+            from orders o,Goods g
+            <trim prefix="where" suffixOverrides="and">
+                <if test="keyWord!=null">
+                     orderNo like '%${keyWord}%' and
+                </if>
+                <if test="busNo!=null">
+                    g.goodsSupply = #{busNo} and
+                </if>
+                    o.goodsNo = g.goodsNo
+            </trim>
+                limit #{PageNo},9;
+    </select>
+    
+    <select id="selectById" resultType="Bean.OrderDetail">
+        select orderNo,orderState,orderDate,orderCost,o.goodsNum,busName,g.goodsName,g.goodsImg
+               from orders o ,Business b,Goods g
+            where orderNo=#{orderNo} and
+                  o.goodsNo=g.goodsNo and
+                  g.goodsSupply=b.businessNo;
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*) from orders o,Goods g
+        <trim prefix="where" suffixOverrides="and">
+            <if test="keyWord!=null">
+                 orderNo=#{keyWord} and
+            </if>
+            <if test="busNo!=null">
+                g.goodsSupply = #{busNo} and
+            </if>
+            o.goodsNo = g.goodsNo
+        </trim>
+    </select>
+    
+
+    
+    <update id="updateOrder" >
+        update orders
+        <trim prefix="set" suffixOverrides=",">
+            <if test="orderState!=null">
+                orderState = #{orderState},
+            </if>
+        </trim>
+        where orderNo = #{orderNo}
+    </update>
+
+</mapper>    

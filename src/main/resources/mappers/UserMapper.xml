@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper是根标签，namespace属性：在Mybatis全局范围内找到一个具体的Mapper配置 -->
+<!-- 引入接口后，为了方便通过接口全类名来找到Mapper配置文件，所以通常将namespace属性设置为接口全类名 -->
+<mapper namespace="DAO.Mapper.UserMapper">
+<!--    结果映射-->
+    <resultMap id="UserResultMap" type="Bean.User">
+        <id column="customerNo" property="customerNo"/>
+        <result column="password" property="passWord"/>
+        <result column="address" property="addRess"/>
+        <result column="userName" property="userName"/>
+        <result column="postCode" property="postCode"/>
+        <result column="telPhone" property="telPhone"/>
+
+<!--        <result column="busName" property="userName"/>-->
+<!--        <id column="businessNo" property="customerNo"/>-->
+    </resultMap>
+
+<!--    公共sql-->
+
+    <!-- 编写具体的SQL语句，使用id属性唯一的标记一条SQL语句 -->
+    <!-- resultType属性：指定封装查询结果的Java实体类的全类名 -->
+
+        <!-- Mybatis负责把SQL语句中的#{}部分替换成“?”占位符，在#{}内部还是要声明一个见名知意的名称 -->
+<!--    <select id="selectDynamic" resultType="Bean.User" >-->
+<!--        <include refid="select"/>-->
+<!--        <trim prefix="where" suffixOverrides="and">-->
+<!--            <if test="customerNo!=null">-->
+<!--                customerNo = #{customerNo} and-->
+<!--            </if>-->
+<!--            <if test="addRess != null">-->
+<!--                address like '%${addRess}%' and-->
+<!--            </if>-->
+<!--            <if test="userName!=null">-->
+<!--                userName like '%${userName}%' and-->
+<!--            </if>-->
+<!--            <if test="telPhone!=null">-->
+<!--                telPhone = #{telPhone}-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--    </select>-->
+
+    <select id="selectById" resultType="Bean.User">
+        select * from
+                User
+                where customerNo = #{No}
+    </select>
+
+    <select id="selectBusById" resultType="Bean.Business">
+        select * from
+            Business
+        where businessNo = #{No}
+    </select>
+
+    <select id="selectByPage" resultType="Bean.User" >
+        select * from User
+        <trim>
+                <if test="keyWord!=null">
+                    where userName like '%${keyWord}%'
+                </if>
+        </trim>
+            limit #{PageNo},9;
+    </select>
+
+    <select id="selectBusByPage" resultType="Bean.Business" >
+        select * from Business
+        <trim>
+            <if test="keyWord!=null">
+                where busName like '%${keyWord}%'
+            </if>
+        </trim>
+        limit #{PageNo},9;
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*) from
+        <trim>
+            <if test="Table=='User'">
+                User
+            </if>
+            <if test="Table=='Bus'">
+                Business
+            </if>
+        </trim>
+
+        <trim>
+            <if test="keyWord!=null and Table=='User'" >
+                where userName like '%${keyWord}%'
+            </if>
+            <if test="keyWord!=null and Table=='Bus'">
+                where busName like '%${keyWord}%'
+            </if>
+        </trim>
+    </select>
+
+    <update id="updateDynamic" parameterType="Bean.User">
+        update User
+        <trim prefix="set" suffixOverrides=",">
+            <if test="passWord!=null">
+                password= #{passWord},
+            </if>
+            <if test="addRess != null">
+                address = #{addRess},
+            </if>
+            <if test="userName !=null">
+                userName= #{userName},
+            </if>
+            <if test="postCode != null">
+                postCode=#{postCode},
+            </if>
+            <if test="telPhone!=null">
+                telPhone=#{telPhone}
+            </if>
+        </trim>
+        where customerNO=#{customerNo}
+    </update>
+
+    <update id="updateBusDynamic" parameterType="Bean.Business">
+        update Business
+        <trim prefix="set" suffixOverrides=",">
+            <if test="passWord!=null">
+                password= #{passWord},
+            </if>
+            <if test="addRess != null">
+                address = #{addRess},
+            </if>
+            <if test="busName !=null">
+                busName= #{busName},
+            </if>
+            <if test="postCode != null">
+                postCode=#{postCode},
+            </if>
+            <if test="telPhone!=null">
+                telPhone=#{telPhone}
+            </if>
+        </trim>
+        where businessNO=#{businessNo}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from User where customerNo=#{customerNo}
+    </delete>
+
+    <delete id="deleteBusById" parameterType="java.lang.String">
+        delete from Business where businessNo=#{businessNo}
+    </delete>
+
+    <insert id="insertDynamic" parameterType="Bean.User">
+        insert into User
+        values (#{customerNo},#{passWord},#{addRess},#{userName},#{postCode},#{telPhone},'https://img.51miz.com/Element/00/88/08/86/716b81c7_E880886_bebe0ef3.png')
+    </insert>
+
+    <insert id="insertBusDynamic" parameterType="Bean.Business">
+        insert into Business values (#{businessNo},#{passWord},#{addRess},#{busName},#{postCode},#{telPhone},'https://img.51miz.com/Element/00/88/08/86/716b81c7_E880886_bebe0ef3.png')
+    </insert>
+
+    <select id="selectAdminById" resultType="Bean.Admin">
+        select * from Admin
+        where AdminNo = #{AdminNo}
+    </select>
+</mapper>

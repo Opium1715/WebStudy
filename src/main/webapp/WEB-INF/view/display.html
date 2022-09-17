@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<!-- 在html标签内加入Thymeleaf名称空间的声明 -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/demo01.css">
+    <script src="js/tableMain.js"></script>
+</head>
+
+<body>
+
+
+<!-- 在p标签的基础上，使用Thymeleaf的表达式，解析了一个URL地址 -->
+<div class="container">
+    <form action="User.do">
+<!--        <input type="hidden" name="search" value="search"/>-->
+        <input type="text" name="keyword" />
+        <input type="submit" value="查询" th:onclick="Search()"/>
+    </form>
+    <button name="add" class="addbutton" th:onclick="AddUser()">添加</button>
+    <table class="table">
+        <thead>
+        <tr class="tr">
+            <th>用户编号</th>
+            <th>用户密码</th>
+            <th>用户地址</th>
+            <th>用户名</th>
+            <th>用户邮编</th>
+            <th>用户电话</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody th:if="${#lists.isEmpty(session.UserList)}">
+        <tr>
+            <td colspan="7">暂无信息！</td>
+        </tr>
+        </tbody>
+        <tbody th:unless="${#lists.isEmpty(session.UserList)}">
+        <tr th:each="userlists: ${session.UserList}">
+            <td ><a th:text="${userlists.getCustomerNo()}" th:href="@{/User.do(customerNo=${userlists.getCustomerNo()},operate='EditUser')}"></a></td>
+            <td th:text="${userlists.getPassWord()}"></td>
+            <td th:text="${userlists.getAddRess()}"></td>
+            <td th:text="${userlists.getUserName()}"></td>
+            <td th:text="${userlists.getPostCode()}"></td>
+            <td th:text="${userlists.getTelPhone()}"></td>
+            <!--            <td ><button th:onclick="|delUser(${userlists.getCustomerNo()})|">删除</button></td>-->
+            <td ><input type="button" value="修改" th:onclick="modifyUser([[${userlists.getCustomerNo()}]]);"/>
+                <input type="button" value="删除" th:onclick="delUser([[${userlists.getCustomerNo()}]]);"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="pageDiv">
+        <div id="page2Div">
+            <button th:onclick="Page(1);" th:disabled="${session.PageNo}==1">首页</button>
+            <button th:onclick="Page([[${session.PageNo}-1]]);" th:disabled="${session.PageNo}==1">上一页</button>
+            <label>跳转至：
+                <input type="text" th:id="TurnIntoPage" th:value="请输入跳转页"/>
+            </label>
+            <button th:onclick="PageInto()" >转至</button>
+            <button th:onclick="Page([[${session.PageNo}+1]]);" th:disabled="${session.PageNo==session.totalPages}">下一页</button>
+            <button th:onclick="Page([[${session.totalPages}]]);" th:disabled="${session.PageNo==session.totalPages}">尾页</button>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

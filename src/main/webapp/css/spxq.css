@@ -1,0 +1,157 @@
+.detail{
+    width: 100%;
+    height: 65px;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    line-height: 65px;
+    box-shadow: -3px 1px 10px;
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: 400;
+}
+.detail-left{
+    float: left;
+    margin-left: 30px;
+}
+.detail-right{
+    float: right;
+    margin-right: 35px;
+}
+.detail-right i{
+    font-size: 18px;
+}
+.detail-right button{
+    width: 70px;
+    height: 40px;
+    background-color: #ccc;
+    border: 0px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 18px;
+}
+.detail-right button:hover{
+    color:white;
+    background-color: #695cfe;
+    width: 120px;
+    height: 40px;
+}
+.shop_detail{
+    width: 1226px;
+    margin: 30px auto 0px;
+}
+.shop_detail_pic{
+    width: 600px;
+    height: 600px;
+    float: left;
+    margin-right: 10px;
+}
+.shop_detail_pic iframe{
+    opacity: 0.8;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.shop_detail_menu{
+    width: 600px;
+    float: right;
+}
+.shop_detail_menu h1{
+    font-size: 27px;
+}
+.shop_detail_menu p{
+    font-size: 13px;
+    color: #ccc;
+}
+.shop_detail_menu h2{
+    color: coral;
+    font-size: 21px;
+    border-bottom: 1px solid #ccc;
+    height: 50px;
+}
+.detail_map{
+    opacity: 0.75;
+    margin-top: 20px;
+    width: 558px;
+    border: 1px solid #ccc;
+    border-radius: 14px;
+    background-color: white;
+    padding: 30px;
+    line-height: 20px;
+}
+.detail_map i{
+    font-size: 18px;
+}
+.detail_map span{
+    font-size: 18px;
+}
+.detail_map h2{
+    font-size: 20px;
+    margin-left: 10px;
+    color:green;
+    margin-top: 25px;
+    border-bottom: 0;
+}
+.detail_judge{
+    margin-top: 20px;
+    width: 558px;
+    border: 1px solid #ccc;
+    border-radius: 14px;
+    background-color: white;
+    padding: 15px;
+    height: 120px;
+
+}
+.detail_judge button{
+    margin-top: 20px;
+    width: 120px;
+    height: 50px;
+    margin-left: 60px;
+    background-color: #ccc;
+    border: 0px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.detail_judge button:hover{
+    background-color: #695cfe;
+    color: white;
+}
+.l_bottom {
+    font-size: 16px;
+    background-color: #358384;
+    line-height: 60px;
+    width: 100%;
+    margin-top: 733px;
+    text-align: center;
+}
+
+
+.detail_order{
+    margin-top: 20px;
+    width: 558px;
+    border: 1px solid #ccc;
+    border-radius: 14px;
+    background-color: white;
+    padding: 15px;
+    height: 180px;
+}
+.detail_order h2{
+    margin-left: 20px;
+}
+.detail_order span{
+    margin-left: 20px;
+    font-size: 17px;
+}
+.detail_order button{
+    margin-top: 20px;
+    width: 120px;
+    height: 50px;
+    margin-left: 60px;
+    background-color: #ccc;
+    border: 0px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.detail_order button:hover{
+    background-color: #695cfe;
+    color: white;
+}

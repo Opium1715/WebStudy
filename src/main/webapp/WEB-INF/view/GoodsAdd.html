@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户添加</title>
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./css/Navi.css">
+    <link rel="stylesheet" href="./css/GoodsAdd.css">
+</head>
+<body>
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+                    <span class="image">
+                        <img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.q4HiVTA0d07KjLUqmbQ0JgAAAA?w=134&h=150&c=7&r=0&o=5&dpr=1.5&pid=1.7"
+                             alt="用户图片">
+                    </span>
+            <div class="text logo-text">
+                <span class="name"></span>
+                <span class="profession">用户职位</span>
+            </div>
+        </div>
+
+        <i class="bx bx-chevron-right toggle"></i>
+    </header>
+    <div class="menu-bar">
+        <div class="menu">
+            <ul class="menu-links">
+                <li class="nav-link" >
+                    <a th:href="@{/User.do(operate='EditUser',No=${session.Bus.getBusinessNo()})}">
+                        <i class='bx bxs-business icon'></i>
+                        <span class="text nav-text">我的信息</span>
+                    </a>
+                </li>
+
+                <li class="nav-link" >
+                    <a th:href="@{/Goods.do(Table='unjudgedGoods',PageNo=1,BusNo=${session.Bus.getBusinessNo()})}">
+                        <i class='bx bx-shopping-bag icon' ></i>
+                        <span class="text nav-text">我的商品</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a th:href="@{/Orders.do(PageNo=1,BusNo=${session.Bus.getBusinessNo()})}">
+                        <i class='bx bx-badge-check icon' ></i>
+                        <span class="text nav-text">我的订单</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-content">
+            <li>
+                <a  th:href="@{/Login.do}">
+                    <i class="bx bx-log-out icon"></i>
+                    <span class="text nav-text">登出</span>
+                </a>
+            </li>
+            <li class="mode">
+                <div class="sun-moon">
+                    <i class="bx bx-moon icon moon"></i>
+                    <i class="bx bx-sun icon sun"></i>
+                </div>
+                <span class="mode-text text">夜间模式</span>
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+        </div>
+
+    </div>
+</nav>
+<script src="./js/Navi.js"></script>
+
+
+<div id="content" class="home">
+    <div class="userUpdate">
+        <form th:action="Goods.do"  method="post">
+            <input type="hidden" name="No" value="1"/>
+            <input type="hidden" name="operate" value="AddGoods"/>
+            <div class="label-left">
+                <label >商品名称
+                    <input type="text" name="Name" />
+                    <br>
+                </label>
+                <label >商品价格
+                    <input type="text" name="Price" />
+                    <br>
+                </label>
+                <label  >商品类型
+                    <br>
+                    <select name="type" id="type">
+                        <option value="1" >手机</option>
+                        <option value="2" >电脑</option>
+                        <option value="3" >鞋子</option>
+                        <option value="4" >耳机</option>
+                        <option value="5" >电器</option>
+                        <option value="6" >手表</option>
+                        <option value="7" >衣服</option>
+                    </select>
+                    <br>
+                </label>
+            </div>
+            <div class="label-right">
+                <label  >库存数量
+                    <input type="text" name="Num" />
+                    <br>
+                </label>
+                <label >图片链接
+                    <input type="text" name="href" />
+                    <br>
+                </label>
+                <label>商品描述
+                    <input type="text" name="description" />
+                    <br>
+                </label>
+            </div>
+            <button type="submit">添加</button>
+            <br>
+        </form>
+    </div>
+</div>
+</body>
+</html>

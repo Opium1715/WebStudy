@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<!-- 在html标签内加入Thymeleaf名称空间的声明 -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>购物后端管理系统</title>
+    <!-- <link rel="stylesheet" href="./css/test.css"> -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./css/Navi.css">
+    <link rel="stylesheet" href="./css/minireset.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/cart.css" />
+    <link rel="stylesheet" href="./css/bookManger.css" />
+    <link rel="stylesheet" href="./css/orderManger.css" />
+    <script src="js/tableMain.js"></script>
+    <script src="js/searchBar.js"></script>
+</head>
+
+<body>
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+                <span class="image">
+                    <img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.q4HiVTA0d07KjLUqmbQ0JgAAAA?w=134&h=150&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="用户图片">
+                </span>
+            <div class="text logo-text">
+                <span class="name" >欢迎使用</span>
+                <span class="profession" >管理员</span>
+            </div>
+        </div>
+
+        <i class="bx bx-chevron-right toggle"></i>
+    </header>
+    <div class="menu-bar">
+        <div class="menu">
+<!--            <li class="search-box">-->
+<!--                <i class="bx bx-search icon"></i>-->
+<!--                <input type="text" placeholder="请输入关键字">-->
+<!--            </li>-->
+
+            <ul class="menu-links">
+
+                <li class="nav-link" data-id="test">
+                    <a th:href="@{/User.do(Type='User',PageNo=1)}">
+                        <i class='bx bx-user icon' ></i>
+                        <span class="text nav-text">用户信息</span>
+                    </a>
+                </li>
+
+                <li class="nav-link" data-id="test">
+                    <a th:href="@{/User.do(Type='Bus',PageNo=1)}">
+                        <i class='bx bxs-business icon'></i>
+                        <span class="text nav-text">商户信息</span>
+                    </a>
+                </li>
+
+                <!-- 下面的小li都是一样的样式，只需要修改文字和图标 -->
+                <li class="nav-link" data-id="Login">
+                    <a th:href="@{/Goods.do(Table='Goods',PageNo=1)}">
+                        <i class='bx bx-shopping-bag icon' ></i>
+                        <span class="text nav-text">商品信息</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a th:href="@{/Goods.do(Table='unjudgedGoods',PageNo=1)}">
+                        <i class='bx bx-badge-check icon' ></i>
+                        <span class="text nav-text">商品信息审核</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a th:href="@{/Orders.do(PageNo=1)}">
+                        <i class='bx bx-task icon'></i>
+                        <span class="text nav-text">订单信息</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-content">
+            <li>
+                <a th:href="@{/Login.do}">
+                    <i class="bx bx-log-out icon"></i>
+                    <span class="text nav-text">登出</span>
+                </a>
+            </li>
+            <li class="mode">
+                <div class="sun-moon">
+                    <i class="bx bx-moon icon moon"></i>
+                    <i class="bx bx-sun icon sun"></i>
+                </div>
+                <span class="mode-text text">夜间模式</span>
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+        </div>
+
+    </div>
+</nav>
+<script src="./js/Navi.js"></script>
+
+
+
+
+
+<div id="content" class="home">
+    <div class="header">
+        <div class="w">
+            <div class="header-left">
+                <img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.UbYEWwYpwEd_8qsF2WvZ1QAAAA?w=173&h=206&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt=""/>
+                <h1>订单信息</h1>
+            </div>
+            <div class="header-right">
+            </div>
+        </div>
+    </div>
+
+    <div class="navi-line">
+        <div class="navi-bar">
+            <div class="bar-search">
+                <input type="text" id="OrderNo" placeholder="请输入订单编号"/>
+                <button onclick="SearchOrder()">
+                    <i class='bx bx-search-alt' ></i>
+                    搜索
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="list">
+        <div class="w">
+            <table>
+                <thead>
+                <tr>
+                    <th>订单号</th>
+                    <th>订单日期</th>
+                    <th>订单金额</th>
+<!--                    <th>订单数量</th>-->
+                    <th>订单状态</th>
+                    <th>订单详情</th>
+                </tr>
+                </thead>
+                <tbody th:if="${#lists.isEmpty(session.OrdersList)}">
+                    <tr>
+                       <td colspan="6">暂无信息！</td>
+                    </tr>
+                </tbody>
+                <tbody th:unless="${#lists.isEmpty(session.OrdersList)}">
+                <tr th:each="order: ${session.OrdersList}" th:object="${order}">
+                    <td th:text="*{orderNo}"></td>
+                    <td th:text="*{orderDate}"></td>
+                    <td th:text="*{orderCost}"></td>
+<!--                    <td th:text="*{getGoodsNum()}"></td>-->
+                    <td><a class="send" th:text="*{getOrderState()}"></a></td>
+                    <td><a th:href="@{/Orders.do(orderNo=*{getOrderNo()},operate='EditOrder')}">查看详情</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="footer">
+                <div class="footer-right">
+                    <div onclick="Page(1)" th:disabled="${session.PageNo}==1">首页</div>
+                    <div th:onclick="Page([[${session.PageNo}-1]]);" th:disabled="${session.PageNo}==1">上一页</div>
+                    <span>跳转至</span>
+                    <input type="text" value="" placeholder="请输入跳转页" id="TurnIntoPage"/>
+                    <span>页</span>
+                    <button th:onclick="PageInto([[${session.totalPages}]])">转至</button>
+                    <div th:onclick="Page([[${session.PageNo}+1]])" th:disabled="${session.PageNo==session.totalPages}">下一页</div>
+                    <div th:onclick="Page([[${session.totalPages}]]);" th:disabled="${session.PageNo==session.totalPages}">末页</div>
+                    <span th:text="|当前第${session.PageNo}页|">当前第10页</span>
+                    <span th:text="|共${session.totalPages}页|">共10页</span>
+<!--                    <span th:text="${session.}">30条记录</span>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom">
+        <div class="w">
+            <div class="top">
+                <ul>
+                    <li>
+                        <a href="">
+                            <img src="" alt="" />
+                            <span>精益求精</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="" alt="" />
+                            <span>追求卓越</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="" alt="" />
+                            <span>积极上进</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="down">
+            后台管理系统 .Copyright ©2022
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>

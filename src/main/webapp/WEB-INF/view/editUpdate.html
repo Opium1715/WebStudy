@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UserUpdate</title>
+    <link rel="stylesheet" href="./css/UserUpdate.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./css/Navi.css">
+</head>
+<body>
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+                    <span class="image">
+                        <img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.q4HiVTA0d07KjLUqmbQ0JgAAAA?w=134&h=150&c=7&r=0&o=5&dpr=1.5&pid=1.7"
+                             alt="用户图片">
+                    </span>
+            <div class="text logo-text">
+                <span class="name"></span>
+                <span class="profession">用户职位</span>
+            </div>
+        </div>
+
+        <i class="bx bx-chevron-right toggle"></i>
+    </header>
+    <div class="menu-bar">
+        <div class="menu">
+<!--            <li class="search-box">-->
+<!--                <i class="bx bx-search icon"></i>-->
+<!--                <input type="text" placeholder="请输入关键字">-->
+<!--            </li>-->
+
+            <ul class="menu-links">
+
+                <li class="nav-link" data-id="test">
+                    <a th:href="@{/User.do(Type='User',PageNo=1)}">
+                        <i class='bx bx-user icon' ></i>
+                        <span class="text nav-text">用户信息</span>
+                    </a>
+                </li>
+
+                <li class="nav-link" data-id="test">
+                    <a th:href="@{/User.do(Type='Bus',PageNo=1)}">
+                        <i class='bx bxs-business icon'></i>
+                        <span class="text nav-text">商户信息</span>
+                    </a>
+                </li>
+
+                <!-- 下面的小li都是一样的样式，只需要修改文字和图标 -->
+                <li class="nav-link" data-id="Login">
+                    <a th:href="@{/Goods.do(Table='Goods',PageNo=1)}">
+                        <i class='bx bx-shopping-bag icon' ></i>
+                        <span class="text nav-text">商品信息</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a th:href="@{/Goods.do(Table='unjudgedGoods',PageNo=1)}">
+                        <i class='bx bx-badge-check icon' ></i>
+                        <span class="text nav-text">商品信息审核</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a th:href="@{/Orders.do(PageNo=1)}">
+                        <i class='bx bx-task icon'></i>
+                        <span class="text nav-text">订单信息</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-content">
+            <li>
+                <a  th:href="@{/Login.do}">
+                    <i class="bx bx-log-out icon"></i>
+                    <span class="text nav-text">登出</span>
+                </a>
+            </li>
+            <li class="mode">
+                <div class="sun-moon">
+                    <i class="bx bx-moon icon moon"></i>
+                    <i class="bx bx-sun icon sun"></i>
+                </div>
+                <span class="mode-text text">夜间模式</span>
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+        </div>
+
+    </div>
+</nav>
+<script src="./js/Navi.js"></script>
+
+<div id="content" class="home">
+    <div class="userUpdate">
+        <form th:if="${session.Type.equals('User')}" action="User.do" method="post" th:object="${User}">
+            <input type="hidden" name="operate" value="UpdateUser">
+            <label  th:text="|用户编号:*{getCustomerNo()}|"> 用户名：</label>
+            <br>
+            <input type="hidden" name="No" th:value="*{getCustomerNo()}"/>
+            <label>密码:
+            <input type="text" name="passWord" th:value="*{getPassWord()}"/>
+            <br>
+            </label>
+            <label>地址：
+                <input type="text" name="addRess" th:value="*{getAddRess()}"/>
+                <br>
+            </label>
+            <label>用户名：
+                <input type="text" name="Name" th:value="*{getUserName()}"/>
+                <br>
+            </label>
+            <label>邮编：
+                <input type="text" name="postCode" th:value="*{getPostCode()}"/>
+                <br>
+            </label>
+            <label>电话：
+                <input type="text" name="telPhone" th:value="*{getTelPhone()}"/>
+                <br>
+            </label>
+            <button type="submit">更新</button>
+            <br>
+        </form>
+
+        <form th:if="${session.Type.equals('Bus')}" action="User.do" method="post" th:object="${User}">
+            <input type="hidden" name="operate" value="UpdateUser">
+            <label  th:text="|商户编号:*{getBusinessNo()}|"> 商户名：</label>
+            <br>
+            <input type="hidden" name="No" th:value="*{getBusinessNo()}"/>
+            <label>密码:
+                <input type="text" name="passWord" th:value="*{getPassWord()}"/>
+                <br>
+            </label>
+            <label>地址：
+                <input type="text" name="addRess" th:value="*{getAddRess()}"/>
+                <br>
+            </label>
+            <label>用户名：
+                <input type="text" name="Name" th:value="*{getBusName()}"/>
+                <br>
+            </label>
+            <label>邮编：
+                <input type="text" name="postCode" th:value="*{getPostCode()}"/>
+                <br>
+            </label>
+            <label>电话：
+                <input type="text" name="telPhone" th:value="*{getTelPhone()}"/>
+                <br>
+            </label>
+            <button type="submit">更新</button>
+            <br>
+        </form>
+    </div>
+</div>
+</body>
+</html>

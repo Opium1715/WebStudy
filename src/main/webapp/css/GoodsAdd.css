@@ -1,0 +1,57 @@
+.html,body{
+    margin: 0;
+}
+.userUpdate {
+    margin-left: 275px;
+    margin-right: 275px;
+    margin-top: 100px;
+    border-radius: 16px;
+    background-color: #f2f2f2;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.userUpdate form{
+    margin: 65px;
+}
+.userUpdate input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.userUpdate button {
+    width: 100%;
+    background-color:gainsboro;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 40px;
+}
+.userUpdate label{
+    font-size: 20px;
+}
+.userUpdate button:hover{
+    background-color: blue;
+    transition: all 0.3s ease;
+    color: white;
+}
+.userUpdate .label-left{
+    float: left;
+    width: 400px;
+}
+.userUpdate .label-right{
+    float: right;
+    width: 400px;
+
+}
+.userUpdate .label-left #type{
+    width: 260px;
+    height: 50px;
+
+}

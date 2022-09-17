@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<beans>
+
+
+    <bean id="LoginService" class="Service.impl.LoginServiceImpl"/>
+    <bean id="Login" class="Controller.LoginController">
+        <property name="loginService" ref="LoginService"/>
+    </bean>
+
+    <bean id="UserService" class="Service.impl.UserServiceImpl"/>
+    <bean id="User" class="Controller.UserController">
+        <property name="userService" ref="UserService"/>
+    </bean>
+
+    <bean id="OrdersService" class="Service.impl.OrdersServiceImpl"/>
+    <bean id="Orders" class="Controller.OrdersController">
+        <property name="ordersService" ref="OrdersService"/>
+    </bean>
+
+    <bean id="GoodsService" class="Service.impl.GoodsServiceImpl"/>
+    <bean id="Goods" class="Controller.GoodsController">
+        <property name="goodsService" ref="GoodsService"/>
+    </bean>
+
+    <bean id="Swiper" class="Controller.SwiperController"/>
+
+</beans>

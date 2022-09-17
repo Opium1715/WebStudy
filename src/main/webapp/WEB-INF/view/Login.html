@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="container">
+        <form action="Login.do" class="login-form" method="post">
+            <h2>登录</h2>
+            <div class="Alert" th:if="${not #strings.isEmpty(Msg)}">
+                <span th:text="${Msg}" ></span>
+            </div>
+            <input type="hidden" name="operate" value="Login">
+            <input type="text" name="No" placeholder="用户名">
+            <input type="password" name="PassWord" placeholder="密码">
+            <button type="submit">登录</button>
+        </form>
+    </div>
+</body>
+</html>
